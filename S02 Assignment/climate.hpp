@@ -3,7 +3,28 @@
 // In VS2017 go to project > properties > System > and set Stack Reserve Size and Stack Commit Size to 2000000
 // This prevents a stack overflow
 
+// Version Control  
 
+// https://github.com/DannyHullUni/S02-Assignment/commit/b84bed8532d25032be7ced87544a7fd6aa52ba29
+
+/* Version 1.0 - Implementation of the following Methods: 
+
+Array - tempArray
+Array - humidArray 
+sampleCount
+sampleTotal
+*/ 
+
+/*Version 1.1 - Implementation of the following Methods:
+
+getTemperature
+getHumidity
+minTemperature
+maxTemperature
+avgTemperature
+minHumidity
+maxHumidity
+avgHumidity */ 
 
 #define maximum_readings 24 * 60 * 60 
 #define invalid_reading  -1000.0
@@ -33,6 +54,9 @@ class Climate {
 
 private:
 
+	double temperature; 
+	double humidity; 
+
 #if fakedata == 1	
 	FakeSensor sensorDevice;
 #else
@@ -42,6 +66,26 @@ private:
 protected:
 	
 public:
+	//Getter methods to return the temperature and humidity of the remotesensor.cpp
+	double getTemperature()
+	{
+		return temperature;
+	}
+
+	double getHumidity()
+	{
+		return humidity; 
+	}
+	//Setter methods to return the temperature and humidity of the remotesensor.cpp 
+	void setTemperature(double newTemperature)
+	{
+		temperature = newTemperature; 
+	}
+
+	void setHumidity(double newHumidity)
+	{
+		humidity = newHumidity;
+	}
 
 	// Constructors
 	Climate();
@@ -96,6 +140,9 @@ long	Climate::readSensor() {
 
 		std::chrono::duration<double> duration = timeNow - startTime;
  
+		setHumidity(sensorDevice.get_humidity());
+		setTemperature(sensorDevice.get_temperature_in_c());
+
 		int currentSecond = (int)duration.count();
 
 		tempArray[currentSecond] = sensorDevice.get_temperature_in_c();
